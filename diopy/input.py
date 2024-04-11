@@ -490,7 +490,7 @@ def h5_to_adata(h5: h5py.File = None,
     -----
 
     """
-    assayname = np.array(h5.attrs['assay_name'].astype('str').tolist(), dtype=np.object)
+    assayname = np.array(h5.attrs['assay_name'].astype('str').tolist(), dtype=object)
     adata_dict = {}
     #--- obs,var,rawData,nomData, dimR read into the python
     if assayname == np.array([assay_name]):
