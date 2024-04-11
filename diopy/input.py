@@ -150,7 +150,7 @@ def h5_to_df(h5df: [h5py.Group,h5py.File]
                 to_dict[i] = pd.Categorical.from_codes(codes=e0, dtype=lvl)
             if np.array(h5df[i].attrs['origin_dtype']).astype(str).astype(object) == 'bool':
                 e0 = h5df[i][()].astype(int)
-                to_dict[i] = e0.astype(np.bool)
+                to_dict[i] = e0.astype(bool)
             if np.array(h5df[i].attrs['origin_dtype']).astype(str).astype(object) == 'number':
                 e0 = h5df[i][()]
                 to_dict[i] = e0
