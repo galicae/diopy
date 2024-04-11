@@ -129,35 +129,35 @@ def h5_to_df(h5df: [h5py.Group,h5py.File]
 
     """
     to_dict = {}
-    to_dict['index'] = h5df['index'][()].astype(str).astype(np.object)
+    to_dict['index'] = h5df['index'][()].astype(str).astype(object)
     for i in h5df.keys():
         if(len(h5df[i].attrs.keys())>0):
-            if np.array(h5df[i].attrs['origin_dtype']).astype(str).astype(np.object) == 'category':
+            if np.array(h5df[i].attrs['origin_dtype']).astype(str).astype(object) == 'category':
                 e0 = h5df[i][()].astype(int)
                 if np.min(e0) == -2147483648:
                     e0[e0==-2147483648] = -1
-                lvl = h5df['category'][i][()].astype(str).astype(np.object)
+                lvl = h5df['category'][i][()].astype(str).astype(object)
                 # to_dict[i] = pd.Categorical(values=lvl[e0],categories=lvl)
                 lvl =  pd.CategoricalDtype(lvl)
                 to_dict[i] = pd.Categorical.from_codes(codes=e0, dtype=lvl)
-            if np.array(h5df[i].attrs['origin_dtype']).astype(str).astype(np.object) == 'string':
+            if np.array(h5df[i].attrs['origin_dtype']).astype(str).astype(object) == 'string':
                 e0 = h5df[i][()].astype(int)
                 if np.min(e0) == -2147483648:
                     e0[e0==-2147483648] = -1
-                lvl = h5df['category'][i][()].astype(str).astype(np.object)
-                # to_dict[i] = pd.Categorical(values=lvl[e0],categories=lvl).astype(np.object)
+                lvl = h5df['category'][i][()].astype(str).astype(object)
+                # to_dict[i] = pd.Categorical(values=lvl[e0],categories=lvl).astype(object)
                 lvl =  pd.CategoricalDtype(lvl)
                 to_dict[i] = pd.Categorical.from_codes(codes=e0, dtype=lvl)
-            if np.array(h5df[i].attrs['origin_dtype']).astype(str).astype(np.object) == 'bool':
+            if np.array(h5df[i].attrs['origin_dtype']).astype(str).astype(object) == 'bool':
                 e0 = h5df[i][()].astype(int)
                 to_dict[i] = e0.astype(np.bool)
-            if np.array(h5df[i].attrs['origin_dtype']).astype(str).astype(np.object) == 'number':
+            if np.array(h5df[i].attrs['origin_dtype']).astype(str).astype(object) == 'number':
                 e0 = h5df[i][()]
                 to_dict[i] = e0
     df= pd.DataFrame(to_dict)
     df.set_index('index', inplace=True)
     if 'colnames' in h5df.keys():
-        cnames = h5df['colnames'][()].astype(str).astype(np.object)
+        cnames = h5df['colnames'][()].astype(str).astype(object)
         df = df[cnames]
     return df
 
